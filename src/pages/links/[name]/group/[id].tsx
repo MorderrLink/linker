@@ -74,8 +74,8 @@ export default function Group() {
     function deleteGroup() {
       toast.info(`Group with name ${groupData?.title} was deleted`)
       deletion.mutate({id: groupId})
-      setTimeout(async () => {
-        await router.push(`/links/${authorName}`)
+      setTimeout( () => {
+        void router.push(`/links/${authorName}`)
       }, 1000 )
     }
 
@@ -104,7 +104,7 @@ export default function Group() {
           : authorName === session.data?.user.name 
           ? <div className="flex flex-row items-center justify-between px-5 py-4">
               <h1 className="font-medium text-xl">Share this group</h1>
-              <Button className="shadow-2xl" variant={"secondary"} onClick={() => { copyPath() }}>Copy Link</Button>
+              <Button className="shadow-2xl" variant={"secondary"} onClick={ async () => { await copyPath() }}>Copy Link</Button>
             </div> 
         : <div className="px-5 py-2">
             <h1 className="text-xl font-medium">{authorName} : <span className="text-sky-500">{groupData.title}</span></h1>

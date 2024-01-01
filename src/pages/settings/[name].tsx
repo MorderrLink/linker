@@ -27,7 +27,7 @@ export default function UserLinks() {
   const name = typeof router.query.name === "string" ? router.query.name : ""
   const session = useSession()
 
-  let {data: user} = api.profile.getProfileByName.useQuery({name})
+  const {data: user} = api.profile.getProfileByName.useQuery({name})
 
 
   const [newUsername, setNewUserName] = useState<string>("")
