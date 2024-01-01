@@ -4,8 +4,9 @@ import {
     PopoverTrigger,
 } from "~/components/ui/popover"
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 
 export default function Header() {
@@ -38,6 +39,13 @@ export default function Header() {
 
                             <Link href={`/links/${session.data?.user.name}`}>Your Links</Link>
                         </div>
+                        {session.data?.user
+                        ? <div className="w-full flex items-center justify-center">
+                            <Button variant={"outline"} size={"lg"} onClick={() => { void signOut()}}>LogOUT</Button>
+                        </div>
+                        : <div className="w-full flex items-center justify-center">
+                            <Button variant={"outline"} size={"lg"} onClick={() => { void signIn()}}>LogIN</Button>
+                        </div>}
                     </div>
                 </PopoverContent>
             </Popover>

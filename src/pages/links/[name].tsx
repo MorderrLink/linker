@@ -114,7 +114,7 @@ export default function UserLinks() {
   const isOwner = session.data?.user.name == name
   
   useEffect( () => {
-    if (session.data && session.status !== "authenticated") {
+    if (session.data && session.status !== "authenticated" || name === "undefined") {
       void router.push('/')
 
 
@@ -128,7 +128,7 @@ export default function UserLinks() {
     } else if (!session) {
       console.log("session loading.. ")
     }
-  }, [session])
+  }, [session, session.data, session.status])
 
   return (
     <Container direction="col">
@@ -140,11 +140,12 @@ export default function UserLinks() {
         </Button>
         {isOwner 
         ? <h1 className="text-xl font-semibold text-neutral-300">Your Links</h1>
+        : name == "undefined" 
+        ? <h1 className="text-xl font-semibold text-neutral-300">Not logged in.</h1>
         : <h1 className="text-xl font-semibold text-neutral-300">{name}</h1>
         }
         
       </div>
-
 
       <div className="flex flex-col py-4">
       {isOwner
