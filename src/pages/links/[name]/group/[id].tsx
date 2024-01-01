@@ -33,7 +33,7 @@ export default function Group() {
     const authorName = typeof router.query.name == "string" ? router.query.name : "";
     const session = useSession()
     const authorId = api.user.getUserByName.useQuery({name: authorName}).data?.id
-    const authorIdChecked = authorId == undefined ? "" : authorId
+    const authorIdChecked = authorId ?? ""
 
     const deletion = api.link.deleteGroupById.useMutation()
     const group = api.link.getGroupById.useQuery({authorId: authorIdChecked, id: groupId})
