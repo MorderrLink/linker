@@ -114,7 +114,7 @@ export default function UserLinks() {
   const isOwner = session.data?.user.name == name
   
   useEffect( () => {
-    if (session.data && session.status !== "authenticated" || name === "undefined") {
+    if ((session.data && session.status !== "authenticated") ?? name === "undefined") {
       void router.push('/')
 
 
