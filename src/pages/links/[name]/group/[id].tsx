@@ -27,8 +27,8 @@ export default function Group() {
     
     const deleteRef = useRef<HTMLInputElement | null>(null);
     const router = useRouter()
-    const isFollowed = router.query.followed || false
-    const { href: currentUrl, pathname } = useUrl() ?? {};
+    const isFollowed = router.query.followed ?? false
+    const { href: currentUrl } = useUrl() ?? {};
     const groupId = typeof router.query.id == "string" ? router.query.id : "";
     const authorName = typeof router.query.name == "string" ? router.query.name : "";
     const session = useSession()
@@ -43,9 +43,9 @@ export default function Group() {
     const isOwner = session.data?.user.name == authorName
 
 
-    function copyPath() {
+    async function copyPath() {
       if (currentUrl == undefined) return 
-      navigator.clipboard.writeText(`${currentUrl}?followed=true`)
+      await navigator.clipboard.writeText(`${currentUrl}?followed=true`)
       toast.success("Link was copied to the clipboard")
     }
 
@@ -74,8 +74,8 @@ export default function Group() {
     function deleteGroup() {
       toast.info(`Group with name ${groupData?.title} was deleted`)
       deletion.mutate({id: groupId})
-      setTimeout( () => {
-        router.push(`/links/${authorName}`)
+      setTimeout(async () => {
+        await router.push(`/links/${authorName}`)
       }, 1000 )
     }
 

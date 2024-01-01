@@ -24,12 +24,9 @@ import { Skeleton } from "~/components/ui/skeleton";
 
 export default function UserLinks() {
   const router = useRouter();
-  let name = router.query.name
+  const name = typeof router.query.name === "string" ? router.query.name : ""
   const session = useSession()
-  
-  if (typeof name !== "string") {
-    name = ""
-  }
+
   let {data: user} = api.profile.getProfileByName.useQuery({name})
 
 
@@ -73,7 +70,7 @@ export default function UserLinks() {
 
   useEffect(() => {
     if (session.data?.user && session.data.user.name !== name) {      
-      router.push('/')
+      void router.push('/')
 
 
       toast("You are not allowed to acces the page this way!", {
@@ -84,7 +81,7 @@ export default function UserLinks() {
   
       })
     } else if (session && session.status != "authenticated") {
-      router.push('/')
+      void router.push('/')
 
 
       toast("You need to Sign in first!", {
@@ -133,13 +130,13 @@ export default function UserLinks() {
           
           <div className="flex flex-row gap-10 items-center justify-around ">
             <h3 className="text-xl w-2/6 text-neutral-300 ">Your Email</h3>
-            <Input disabled placeholder={`${user?.email || "loading..."}`} className="w-3/6"/>
+            <Input disabled placeholder={`${user?.email ?? "loading..."}`} className="w-3/6"/>
           </div>
           
           <div className="flex flex-row gap-10 items-center justify-around">
             <h3 className="text-xl w-2/6 text-neutral-300 ">Your Username</h3>
             <div className="flex flex-row gap-2 w-3/6">
-              <Input disabled placeholder={`${user?.name || "loading..."}`} />
+              <Input disabled placeholder={`${user?.name ?? "loading..."}`} />
               <Dialog>
                 <DialogTrigger>
                   <img className="w-6 lg:w-7 h-5 lg:h-6" src="/edit.png" alt="Edit" />
@@ -149,7 +146,7 @@ export default function UserLinks() {
                     <DialogTitle >Change your username</DialogTitle>
                     <DialogDescription>
                       <div className="flex flex-row gap-1">
-                        <Input type="text" ref={newUsernameRef} onChange={() => {setNewUserName(newUsernameRef?.current?.value || "")}} placeholder="Enter new name"/>
+                        <Input type="text" ref={newUsernameRef} onChange={() => {setNewUserName(newUsernameRef?.current?.value ?? "")}} placeholder="Enter new name"/>
                         <DialogClose asChild>
                           <Button type="submit" onClick={handleSubmit}>Change</Button>
                         </DialogClose>

@@ -14,7 +14,7 @@ import {
   DialogClose,
 } from "~/components/ui/dialog"
 import { Input } from "~/components/ui/input";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import checkDomain from "~/utils/domains";
 import NewLink from "~/components/NewLink";
 import { signIn, useSession } from "next-auth/react";
@@ -34,13 +34,13 @@ export default function UserLinks() {
    };
 
   const router = useRouter();
-  let name = typeof router.query.name == "string" ? router.query.name : "";
+  const name = typeof router.query.name == "string" ? router.query.name : "";
 
   const {data: user} = api.profile.getProfileByName.useQuery({ name: name }, {enabled: typeof name === "string"} )
 
   
 
-  const userId = user?.id || ""
+  const userId = user?.id ?? ""
 
   const LinksAndGroups = api.link.getByAuthorId.useQuery({id: userId}).data
 
@@ -113,9 +113,9 @@ export default function UserLinks() {
 
   const isOwner = session.data?.user.name == name
   
-  useEffect(() => {
+  useEffect( () => {
     if (session.data && session.status !== "authenticated") {
-      router.push('/')
+      void router.push('/')
 
 
       toast("You need to Sign in first!", {
@@ -176,7 +176,7 @@ export default function UserLinks() {
             </DialogHeader>
           </DialogContent>
         </Dialog>
-        : <img className="w-24 h-24 rounded-full" src={user?.image || ""} alt={name} />
+        : <img className="w-24 h-24 rounded-full" src={user?.image ?? ""} alt={name} />
       }
       
       </div>

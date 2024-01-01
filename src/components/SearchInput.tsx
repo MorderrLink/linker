@@ -43,8 +43,8 @@ export default function SearchInput() {
 
   const Search = api.search.getSearched.useQuery({query: searchQuery}).data
 
-  const SearchedGroups : SearchGroupProps[] = Search?.groups || []
-  const SearchedUsers : SearchUserProps[] = Search?.users || []
+  const SearchedGroups : SearchGroupProps[] = Search?.groups ?? []
+  const SearchedUsers : SearchUserProps[] = Search?.users ?? []
 
 
   const router = useRouter()
@@ -102,7 +102,7 @@ export default function SearchInput() {
               {(SearchedUsers.length > 0) ? 
                 <div className="flex flex-col w-full items-center justify-start gap-3">
                   {SearchedUsers.map((user:SearchUserProps) => {
-                    return <SearchUser key={user.id} id={user.id} user={user.name} image={user.image || ""}/>
+                    return <SearchUser key={user.id} id={user.id} user={user.name} image={user.image ?? ""}/>
                     })}
                 </div>
               : 

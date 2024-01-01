@@ -31,7 +31,7 @@ export const linksRouter = createTRPCRouter({
     deleteGroupById: protectedProcedure
     .input(z.object({id: z.string()}))
     .mutation( async ({input: {id: id}, ctx}) => {
-        const deletion = await ctx.db.linkGroup.delete({where : {
+        await ctx.db.linkGroup.delete({where : {
             id: id
         }})
         return "Group was deleted"

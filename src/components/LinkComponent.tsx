@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HiExternalLink } from "react-icons/hi";
 import { toast } from "sonner";
 import { PiCopySimpleBold } from "react-icons/pi";
-import { useEffect, useState } from "react";
+
 type LinkComponentProps = {
     url: string;
     iconPath: string;
@@ -30,8 +30,8 @@ export default function LinkComponent({url, iconPath}: LinkComponentProps) {
         </div>
         <div className="flex flex-row items-center mx-3 gap-3">
             <Link href={url} className="text-lg lg:text-3xl bg-neutral-800 rounded-md p-0.5 text-neutral-300" target="_blank"><HiExternalLink/></Link>
-            <h1 className="text-lg lg:text-3xl  cursor-pointer bg-neutral-800 rounded-md p-0.5 text-neutral-300" onClick={() => {
-                navigator.clipboard.writeText(url)
+            <h1 className="text-lg lg:text-3xl  cursor-pointer bg-neutral-800 rounded-md p-0.5 text-neutral-300" onClick={async () => {
+                await navigator.clipboard.writeText(url)
                 toast.info("Link copied to the clipboard")
             }}><PiCopySimpleBold className="text-netural-300"/></h1>
         </div>

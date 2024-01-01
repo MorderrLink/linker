@@ -7,7 +7,7 @@ type SearchUserProps = {
     user: string;
 }
 
-export default function SearchUser({id, image, user}:SearchUserProps) {
+export default function SearchUser({image, user}:SearchUserProps) {
   return (
     <div className="w-10/12 h-auto flex flex-col px-4">
         <Link className="flex flex-row items-center justify-between px-5 py-2 bg-neutral-700 rounded-xl shadow-lg" href={`/links/${encodeURI(user)}`}>
